@@ -15,7 +15,7 @@ st.write("Dưới đây là các thông tin và phân tích về dữ liệu đi
 
 # Hiển thị bảng dữ liệu
 st.subheader("Bảng Dữ Liệu")
-st.dataframe(df.head(20))
+st.dataframe(df)
 
 # Thông tin về dữ liệu
 st.subheader("Thông Tin Dữ Liệu")
@@ -82,4 +82,19 @@ for i, column in enumerate(columns_to_plot):
     ax.legend(title='Countries', loc='upper left', bbox_to_anchor=(1, 1))
 
 plt.tight_layout()
+st.pyplot(plt)
+st.subheader("Biểu Đồ Khu Vực - Sự Thay Đổi Điện Tái Tạo")
+selected_countries = st.multiselect('Chọn quốc gia', df['country'].unique(), default=df['country'].unique())
+
+df_selected = df[df['country'].isin(selected_countries)]
+
+plt.figure(figsize=(10, 6))
+for country in selected_countries:
+    df_country = df_selected[df_selected['country'] == country]
+    df_country['renewables_electricity'].plot.area(label=country, alpha=0.5)
+
+plt.title('Sự Thay Đổi Sản Xuất Điện Tái Tạo Theo Quốc Gia')
+plt.xlabel('Năm')
+plt.ylabel('Sản Xuất Điện (Terawatt-hours)')
+plt.legend(title='Quốc Gia')
 st.pyplot(plt)
