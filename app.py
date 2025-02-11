@@ -5,7 +5,8 @@ import seaborn as sns
 from pandas.plotting import scatter_matrix
 
 # Tải dữ liệu
-df = pd.read_csv('energy-data-filtered-full.csv')
+df = pd.read_csv('energy-data-filtered')
+df['year'] = pd.to_datetime(df['year'], format='%Y')
 df.set_index('year', inplace=True)
 
 # Tiêu đề trang
